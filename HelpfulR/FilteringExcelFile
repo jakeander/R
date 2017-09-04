@@ -1,0 +1,19 @@
+#Loading libraries
+library(readxl)
+library(dplyr)
+
+#For loop to import the sheets to a data frame
+j = 1
+for (i in 3:70) {
+  Sheets_DF <- read_excel("Tables/Section1/section01.xls", sheet = i, col_names = FALSE)
+  if ( j < 10 ) {
+  Table_01.0 <- paste0("Table_01.0", j)
+  }
+  else {
+  Table_01.0 <- paste0("Table_01.", j)
+  }
+  check <- paste0(Table_01.0, "<- Sheets_DF[rowSums(!is.na(Sheets_DF)) > 1,]")
+  eval(parse(text=check))
+  j <- j + 1
+  rm(Sheets_DF)
+}
